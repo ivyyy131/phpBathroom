@@ -1,32 +1,69 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Integrated Form</title>
-</head>
-<body>
-<div>
-    <h1>Frame Price Estimator</h1>
-    <form action="framing.php" method="post">
-        <p>Frame of size: <input type="int" name="length" value=""/> x <input type="int" name="width" value=""/>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ivy`s bathroom calculator</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="heading">Frame Price Estimator</h1>
+      <div class="form-container">
+        <form action="framing.php" method="post">
+          <p>
+            Frame of size:
+            <input
+              class="area-values"
+              type="int"
+              name="length"
+              value=""
+              placeholder="Height"
+            />
+            x
+            <input
+              class="area-values"
+              type="int"
+              name="width"
+              value=""
+              placeholder="Width"
+            />
             <select name="SelectMenu">
-                <option value="" selected disabled>Please pick<br>
-                <option value="mm"> mm <br>
-                <option value="cm"> cm <br>
-                <option value="inch"> inch <br>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+              <option value="inch">inch</option>
             </select>
-        </p>
-        <p> Postage:
-            <input type="radio" name="postage" value="standard"/> standard
-            <input type="radio" name="postage" value="rapid"/> rapid
-        </p>
-        <p>
-            Email: <input type="email" name="Email" value=""/>
-        </p>
-        <input type="checkbox" id="tick" name="db" value="">
-        <label for="tick">Receive mail and future information about my framing calculation</label><br>
-        <p><input type="submit"/></p>
-    </form>
-</div>
-</body>
+          </p>
+          <p>
+            Postage:
+            <input type="radio" name="postage" value="standard" /> standard
+            <input type="radio" name="postage" value="rapid" /> rapid
+          </p>
+          <p>
+            <label for="email">Email:</label>
+            <input
+              id="email"
+              type="email"
+              name="Email"
+              value=""
+              placeholder="Please enter your email"
+            />
+          </p>
+          <div>
+            <input type="checkbox" id="tick" name="db" value="" />
+            <label for="tick"
+              >Receive mail and future information about my framing
+              calculation</label
+            >
+          </div>
+          <input class="submitBtn" type="submit" />
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
