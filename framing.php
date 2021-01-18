@@ -34,8 +34,8 @@
               placeholder="Width"
             />
             <select name="SelectMenu">
-			 <option style="color: darkgrey" value="" selected disabled> <?php if(strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "") == "")
-                    {echo "Please pick";} else{ echo strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "");} ?> <br>
+			        <option style="color: darkgrey" value="" selected disabled> <?php if(strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "") == "")
+              {echo "Please pick";} else{ echo strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "");} ?> <br>
               <option value="cm">cm</option>
               <option value="mm">mm</option>
               <option value="inch">inch</option>
