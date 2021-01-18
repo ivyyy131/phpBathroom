@@ -1,33 +1,72 @@
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Integrated Form</title>
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ivy`s bathroom calculator</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-<div>
-    <h1>Frame Price Estimator</h1>
-    <form action="framing.php" method="post">
-        <p>Frame of size: <input type="int" name="length" value="<?php echo isset($_POST["length"]) ? $_POST["length"] : ""; ?>"/> x <input type="int" name="width" value="<?php echo isset($_POST["width"]) ? $_POST["width"] : ""; ?>"/>
+
+ <h1 class="heading">Frame Price Estimator</h1>
+      <div class="form-container">
+        <form action="framing.php" method="post">
+          <p>
+            Frame of size:
+            <input
+              class="area-values"
+              type="int"
+              name="length"
+              value="<?php echo isset($_POST["length"]) ? $_POST["length"] : ""; ?>"
+              placeholder="Height"
+            />
+            x
+            <input
+              class="area-values"
+              type="int"
+              name="width"
+              value="<?php echo isset($_POST["width"]) ? $_POST["width"] : ""; ?>"
+              placeholder="Width"
+            />
             <select name="SelectMenu">
-                <option style="color: darkgrey" value="" selected disabled> <?php if(strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "") == "")
+			 <option style="color: darkgrey" value="" selected disabled> <?php if(strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "") == "")
                     {echo "Please pick";} else{ echo strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "");} ?> <br>
-                <option value="mm"> mm <br>
-                <option value="cm"> cm <br>
-                <option value="inch"> inch <br>
+              <option value="cm">cm</option>
+              <option value="mm">mm</option>
+              <option value="inch">inch</option>
             </select>
-        </p>
-        <p> Postage:
-            <input type="radio" name="postage" value="standard"/> standard
-            <input type="radio" name="postage" value="rapid"/> rapid
-        </p>
-        <p>
-            Email: <input type="text" name="Email" value="<?php echo strip_tags(isset($_POST["Email"]) ? $_POST["Email"] : "");?>"/>
-        </p>
-        <input type="checkbox" id="tick" name="db" value="">
-        <label for="tick">Receive mail and future information about my framing calculation</label><br>
-        <p><input type="submit"/></p>
-    </form>
+          </p>
+          <p>
+            Postage:
+            <input type="radio" name="postage" value="standard" /> standard
+            <input type="radio" name="postage" value="rapid" /> rapid
+          </p>
+          <p>
+            <label for="email">Email:</label>
+            <input
+              id="email"
+              type="email"
+              name="Email"
+              value="<?php echo strip_tags(isset($_POST["Email"]) ? $_POST["Email"] : "");?>"
+              placeholder="Please enter your email"
+            />
+          </p>
+          <div>
+            <input type="checkbox" id="tick" name="db" value="" />
+            <label for="tick"
+              >Receive mail and future information about my framing
+              calculation</label
+            >
+          </div>
+          <input class="submitBtn" type="submit"  />
+        </form>
+		</body>
+	</html>
     <?php
     #declaration of the input variables
     $len = strip_tags(isset($_POST["length"]) ? $_POST["length"] : "");
@@ -103,37 +142,10 @@
                         mail( $email, $conf_subject, $message);
                     }
 
-                    //database connection
-                    if((isset($_POST["db"]) == 1)){
-                        if($email == ""){
-                            echo "<p>Please enter your email to receive mail confirmation.</p>";//Error message
-                        }elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                            echo "<p>Invalid email format</p>";//Error message
-                        }else {
-                            //Connect to MySQL
-                            $host = "...";
-                            $user = "...";
-                            $pass = "...";
-                            $dbname = "...";
-                            $conn = new mysqli($host, $user, $pass, $dbname);
-
-                            if ($conn->connect_error){
-                                die("Connection failed ! ");
-                            }
-
-                            //Issue the query
-                            $sql = "INSERT INTO `...`.`FramingDB` (`length`, `width`, `postage`, `price`, `email`, `id`) VALUES ('$len', '$width', '$postage', '$totalPrice', '$email', NULL);";
-                            $result = $conn->query($sql);
-
-                            //Disconnect
-                            $conn->close();
-                        }
-                    }
+          
                 }
             }
         }
     }
     ?>
-</div>
-</body>
-</html>
+
