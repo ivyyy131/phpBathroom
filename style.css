@@ -37,7 +37,8 @@ form {
   width: 80px;
 }
 input,
-select {
+select,
+.backBtn {
   border: 1px solid rgb(202, 229, 238);
   outline-color: lightblue;
   border-radius: 5px;
@@ -54,6 +55,7 @@ select {
   padding: 10px;
   align-self: center;
   cursor: pointer;
+  text-decoration: none;
 }
 .submitBtn:hover {
   background-color: #00b4d8;

@@ -13,7 +13,7 @@
   <div class="container">
     <h1 class="heading">Frame Price Estimator</h1>
     <div class="form-container">
-      <form action="index.php" method="POST">
+      <form action="submitForm.php" method="POST">
         <p>
           Frame of size:
           <input class="area-values" type="number" step="0.1" min="0" name="height" value="<?php echo isset($_POST["height"]) ? $_POST["height"] : ""; ?>" placeholder="Height" />
@@ -27,14 +27,16 @@
                 echo strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "");
               } ?></option>
             <option value="cm">cm</option>
-            <option value="mm">mm</option>
+            <option value="m">m</option>
             <option value="inch">inch</option>
           </select>
         </p>
         <p>
           Postage:
-          <input type="radio" name="postage" value="standard" /> standard
-          <input type="radio" name="postage" value="rapid" /> rapid
+          <input id="standard" type="radio" name="postage" value="standard" />
+          <label for="standard">standard</label>
+          <input id="rapid" type="radio" name="postage" value="rapid" />
+          <label for="rapid">rapid</label>
         </p>
         <p>
           <label for="email">Email:</label>
@@ -46,7 +48,7 @@
             calculation</label>
         </div>
         <input type="hidden" name="form_submitted" value="1" />
-        <input class="submitBtn" type="submit" />
+        <input class="submitBtn" type="submit" name="submit" />
       </form>
     </div>
   </div>
@@ -54,61 +56,3 @@
 </body>
 
 </html>
-<?php
-#declaration of the input variables
-$height = strip_tags(isset($_POST["height"]) ? $_POST["height"] : "");
-$width = strip_tags(isset($_POST["width"]) ? $_POST["width"] : "");
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-  if ($height === "" && $width === "") {
-    echo "<p>Please complete all fields.</p>"; //Error message
-  } elseif ($height === "") {
-    echo "<p>Please complete height field.</p>"; //Error message
-  } elseif ($width === "") {
-    echo "<p>Please complete width field.</p>"; //Error message
-  }
-} else {
-  if (is_numeric($height) === false || is_numeric($width) === false) {
-    $selectMenu = strip_tags(isset($_POST["SelectMenu"]) ? $_POST["SelectMenu"] : "");
-    switch ($selectMenu) {
-      case "mm":
-        $height = $height / 1000;
-        $width = $width / 1000;
-        break;
-      case "cm":
-        $height = $height / 100;
-        $width = $width / 100;
-        break;
-      case "inch":
-        $height = $height * 0.0254;
-        $width = $width * 0.0254;
-        break;
-    }
-    $postage = strip_tags(isset($_POST["postage"]) ? $_POST["postage"] : "");
-    $frameArea = (int)$height * (int)$width;
-    $priceArea = round((($frameArea * $frameArea) + (90 * $frameArea) + 5), 2);
-    $L = max($height, $width);
-    if ($postage == "standard") {
-      $postageCosts = round(3 * $L + 4, 2);
-      $totalPrice = $priceArea + $postageCosts;
-      echo "<p>Your frame will cost £$priceArea plus rapid postage of £$postageCosts giving a total price of £$totalPrice.</p>";
-      $message = 'Your frame will cost £' . $priceArea . ' plus rapid postage of £' . $postageCosts . ' giving a total price of £' . $totalPrice . '.';
-    } else if ($postage == "rapid") {
-      $postageCosts = round(4 * $L + 8, 2);
-      $totalPrice = $priceArea + $postageCosts;
-      echo "<p>Your frame will cost £$priceArea plus rapid postage of £$postageCosts giving a total price of £$totalPrice.</p>";
-      $message = 'Your frame will cost £' . $priceArea . ' plus rapid postage of £' . $postageCosts . ' giving a total price of £' . $totalPrice . '.';
-    } else {
-      echo "<p>Your frame will cost £$priceArea." . "</p>";
-      $message = 'Your frame will cost £' . $priceArea . '.';
-    }
-    // Subject of confirmation email.
-    $conf_subject = "Frame Price Estimator";
-    $email = $_POST["Email"];
-    echo "<p>Email: $email</p>";
-    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-      // Mail confirmation.
-      mail($email, $conf_subject, $message);
-    }
-  }
-}
-?>
